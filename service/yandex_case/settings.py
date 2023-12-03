@@ -15,6 +15,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_IMG_URL = ('https://cdn.dribbble.com/users/55871/screenshots/2158022/media/'
+                   '8f2a4a2c9126a9f265fb9e1023b1698a.jpg?resize=400x0')
 
 # Application definition
 
@@ -29,6 +31,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+
+    'event_app',
 ]
 
 MIDDLEWARE = [
