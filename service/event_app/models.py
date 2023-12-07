@@ -26,7 +26,7 @@ class Event(models.Model):
     places = models.PositiveIntegerField(default=0, null=True, blank=True)
     free_places = models.PositiveIntegerField(default=0, null=True, blank=True)
 
-    category = models.ManyToManyField('Category')
+    category = models.ManyToManyField('Category', null=True, blank=True)
 
 
 class UserEventRel(models.Model):

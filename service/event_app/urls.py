@@ -7,7 +7,7 @@ from .views import UserViewSet, EventViewSet, UserEventRelViewSet
 router = routers.SimpleRouter()
 router.register('users', UserViewSet)
 router.register('events', EventViewSet)
-router.register('events', UserEventRelViewSet)
+router.register('user-event-rel', UserEventRelViewSet)
 
 urlpatterns = []
 

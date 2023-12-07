@@ -1,3 +1,4 @@
+from django.db.models import F
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from rest_framework.generics import get_object_or_404
@@ -7,7 +8,7 @@ from .serializers import UserSerializer, EventSerializer, UserEventRelSerializer
 from .models import Event, UserEventRel
 
 from django.conf import settings
-
+from .permissions import IsOwnerOrAdmin
 
 # Ready to use
 class UserViewSet(viewsets.ModelViewSet):
@@ -24,6 +25,7 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = ()
 
     def perform_create(self, serializer):
         """changing photo if it is not there"""
@@ -41,6 +43,13 @@ class EventViewSet(viewsets.ModelViewSet):
                 return Event.objects.all()
         return Event.objects.filter(is_verified=True)
 
+    def get_permissions(self):
+        if self.request.method not in ('GET', 'POST', 'HEAD', 'OPTIONS'):
+            permission_classes = (IsAuthenticated, IsOwnerOrAdmin)
+        else:
+            permission_classes = ()
+        return [permission() for permission in permission_classes]
+
 
 # In dev process:
 class UserEventRelViewSet(viewsets.ModelViewSet):
@@ -55,13 +64,27 @@ class UserEventRelViewSet(viewsets.ModelViewSet):
     def get_object(self):
         """finding relation by `Event` id"""
         event_id = self.kwargs['pk']
-        return get_object_or_404(UserEventRel, user=self.request.user,
-                                 event=Event.objects.get(pk=event_id))
+        obj = get_object_or_404(UserEventRel,
+                                event=get_object_or_404(Event, id=event_id),
+                                user=self.request.user)
+        return obj
 
     def perform_create(self, serializer):
         """automatically adding user"""
-        serializer.validated_data['user'] = self.request.user
+        curr_user = self.request.user
+        curr_event = get_object_or_404(Event, id=self.request.data['event'])
+        serializer.validated_data['user'] = curr_user
+        serializer.validated_data['event'] = curr_event
+
+        if len(UserEventRel.objects.filter(event=curr_event, user=curr_user)) != 0:
+            return self.perform_update(serializer)
         serializer.save()
+
+        Event.objects.filter(id=curr_event.id).update(free_places=F('free_places')-1)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+        Event.objects.filter(id=instance.event.id).update(free_places=F('free_places')+1)
 
     def get_queryset(self):
         """list only relation user in"""
