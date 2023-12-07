@@ -18,6 +18,9 @@ ALLOWED_HOSTS = ['158.160.129.2', '127.0.0.1']
 DEFAULT_IMG_URL = ('https://cdn.dribbble.com/users/55871/screenshots/2158022/media/'
                    '8f2a4a2c9126a9f265fb9e1023b1698a.jpg?resize=400x0')
 
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -132,3 +135,4 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     )
 }
+
