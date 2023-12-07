@@ -5,17 +5,28 @@ from django.conf import settings
 
 class Event(models.Model):
     """describes db fields of `Event`"""
+    # organizers info
     username = models.CharField(max_length=128)
     phone_number = models.CharField(max_length=11)
     social_links = models.CharField(max_length=128)
     organization = models.CharField(max_length=128)
+
+    # event info
     event_name = models.CharField(max_length=128)
     event_type = models.CharField(max_length=128)
     event_date = models.CharField(max_length=12)
     event_time = models.CharField(max_length=5)
     event_place = models.CharField(max_length=128)
+
+    # additional fields
     is_verified = models.BooleanField(default=False)
     photo = models.CharField(max_length=1024, null=True, blank=True, default=settings.DEFAULT_IMG_URL)
+
+    is_place_limited = models.BooleanField(default=False)
+    places = models.PositiveIntegerField(default=0, null=True, blank=True)
+    free_places = models.PositiveIntegerField(default=0, null=True, blank=True)
+
+    category = models.ManyToManyField('Category')
 
 
 class UserEventRel(models.Model):
@@ -24,3 +35,12 @@ class UserEventRel(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+
+class Category(models.Model):
+    """
+    category table for events
+    """
+    name = models.CharField(max_length=32)
+
+
