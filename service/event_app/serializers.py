@@ -22,6 +22,7 @@ class UserEventRelSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserEventRel
         fields = '__all__'
+        read_only_fields = ('user',)
 
 
 
