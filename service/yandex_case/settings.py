@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'event_app',
+    'file_uploader_app',
 ]
 
 MIDDLEWARE = [

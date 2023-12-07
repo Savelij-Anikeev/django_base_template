@@ -10,6 +10,7 @@ from .models import Event, UserEventRel
 from django.conf import settings
 from .permissions import IsOwnerOrAdmin
 
+
 # Ready to use
 class UserViewSet(viewsets.ModelViewSet):
     """
