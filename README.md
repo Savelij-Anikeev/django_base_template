@@ -7,7 +7,7 @@ Mundex
       Django
       Django Rest Framework (DRF)
       Celery
-    database:
+    Databases:
       Postgresql (major db)
       Redis (celery broker)
     Other instruments:
