@@ -1,4 +1,16 @@
 # yandex_case_backend_2.0
 API for utmn yandex case competition
-# team 
+# Team 
 Mundex
+# Used technologies
+    Frameworks:
+      Django
+      Django Rest Framework (DRF)
+      Celery
+    database:
+      Postgresql (major db)
+      Redis (celery broker)
+    Other instruments:
+      Git
+      Docker + compose
+    
