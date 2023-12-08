@@ -20,7 +20,8 @@ class Event(models.Model):
 
     # additional fields
     is_verified = models.BooleanField(default=False)
-    photo = models.CharField(max_length=1024, null=True, blank=True, default=settings.DEFAULT_IMG_URL)
+    photo = models.ImageField(null=True, blank=True)
+    photo_url = models.CharField(max_length=1024, null=True, blank=True, default=settings.DEFAULT_IMG_URL)
 
     is_place_limited = models.BooleanField(default=False)
     places = models.PositiveIntegerField(default=0, null=True, blank=True)
@@ -42,5 +43,4 @@ class Category(models.Model):
     category table for events
     """
     name = models.CharField(max_length=32)
-
 

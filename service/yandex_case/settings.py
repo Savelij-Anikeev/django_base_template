@@ -1,16 +1,14 @@
+import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import celery
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8go1*j$sz7x3tqaq9xb!hj#rz)v06_jmhwrwklb_$$5-8y^#ks'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['158.160.129.2', '127.0.0.1']
@@ -18,7 +16,8 @@ ALLOWED_HOSTS = ['158.160.129.2', '127.0.0.1']
 DEFAULT_IMG_URL = ('https://cdn.dribbble.com/users/55871/screenshots/2158022/media/'
                    '8f2a4a2c9126a9f265fb9e1023b1698a.jpg?resize=400x0')
 
-# Application definition
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -34,6 +33,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'event_app',
+    'file_uploader_app',
 ]
 
 MIDDLEWARE = [
@@ -69,9 +69,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'yandex_case.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -79,9 +76,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,9 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -111,13 +102,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -127,7 +112,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    # )
 }
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+MEDIA_URL = '/media/'
+
