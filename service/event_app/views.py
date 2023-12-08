@@ -1,14 +1,17 @@
 from django.db.models import F
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from django.contrib.auth.models import User
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .serializers import UserSerializer, EventSerializer, UserEventRelSerializer
 from .models import Event, UserEventRel
 
 from django.conf import settings
 from .permissions import IsOwnerOrAdmin
+
+from file_uploader_app.storage_scripts import upload_event
 
 
 # Ready to use
@@ -28,11 +31,35 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = ()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response({'detail': 'created'}, status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
+        """checking if it`s place limited"""
+        if serializer.validated_data['is_place_limited']:
+            serializer.validated_data['free_places'] = serializer.validated_data['places']
+        else:
+            serializer.validated_data['free_places'] = serializer.validated_data['places'] = 0
+
         """changing photo if it is not there"""
-        if serializer.validated_data['photo'] == '':
-            serializer.validated_data['photo'] = settings.DEFAULT_IMG_URL
-        serializer.save()
+        if not serializer.validated_data['photo']:
+            serializer.validated_data['photo_url'] = settings.DEFAULT_IMG_URL
+
+            serializer.save()
+            return
+
+        if serializer.validated_data['photo_url'] != '':
+            serializer.validated_data['photo'] = None
+
+            serializer.save()
+            return
+        obj = serializer.save()
+        upload_event.delay(obj.id)
 
     def get_queryset(self):
         """return queryset"""

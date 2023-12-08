@@ -15,6 +15,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+        read_only_fields = ('id', 'free_places', 'is_verified')
 
 
 class UserEventRelSerializer(serializers.ModelSerializer):
