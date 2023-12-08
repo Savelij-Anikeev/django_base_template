@@ -1,5 +1,5 @@
 # yandex_case_backend_2.0
-API for utmn yandex case competition
+API for utmn yandex case competition.
 # Team 
 
 ███╗░░░███╗██╗░░░██╗███╗░░██╗██████╗░███████╗██╗░░██╗
@@ -9,7 +9,7 @@ API for utmn yandex case competition
 ██║░╚═╝░██║╚██████╔╝██║░╚███║██████╔╝███████╗██╔╝╚██╗
 ╚═╝░░░░░╚═╝░╚═════╝░╚═╝░░╚══╝╚═════╝░╚══════╝╚═╝░░╚═╝
 
-# Used technologies
+# Used technologies:
     Frameworks:
       Django
       Django Rest Framework (DRF)
@@ -20,5 +20,5 @@ API for utmn yandex case competition
     Other instruments:
       Git
       Docker + compose
-# API endpoints
+# API endpoints:
     Soon...
