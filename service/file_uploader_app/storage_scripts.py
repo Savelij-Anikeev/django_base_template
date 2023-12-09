@@ -1,3 +1,4 @@
+
 import os
 import boto3
 import uuid
@@ -18,12 +19,18 @@ def set_up():
 
     # starting connection
     session = boto3.session.Session()
+
+    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+
     s3 = session.client(
         service_name='s3',
         endpoint_url=endpoint_url,
         # Don`t steal it please
-        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+        aws_access_key_id='YCAJE5PDVsfeJkHYmNI2dyfTH',
+        aws_secret_access_key='YCPu2Ut6tDGKTBU1zwBRdeCPDc2kdWCSCJ1gcjFY',
+        # aws_access_key_id=str(aws_access_key_id),
+        # aws_secret_access_key=str(aws_secret_access_key),
     )
 
     return s3, bucket_name, endpoint_url
