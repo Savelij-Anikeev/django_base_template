@@ -33,6 +33,7 @@ auth:
     auth/token/logout/
 
 API:
+
     // events CRUD
     api/v1/events/
     api/v1/events/event_id/
