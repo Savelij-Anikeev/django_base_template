@@ -23,16 +23,16 @@ API for utmn yandex case competition.
 # API endpoints:
 admin:
 
-admin/ 
+    admin/ 
 
 auth:
 
-auth/users/
-auth/users/me/
-auth/token/login/
-auth/token/logout/
+    auth/users/
+    auth/users/me/
+    auth/token/login/
+    auth/token/logout/
 
 API:
 
-api/v1/events/
-api/v1/events/event_id/
+    api/v1/events/
+    api/v1/events/event_id/
