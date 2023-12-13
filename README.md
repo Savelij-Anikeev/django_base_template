@@ -20,6 +20,8 @@ API for utmn yandex case competition.
     Other instruments:
       Git
       Docker + compose
+      smtp.mail.ru (SMPT)
+
 # API endpoints:
 admin:
 
