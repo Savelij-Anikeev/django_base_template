@@ -48,6 +48,10 @@ API:
     api/v1/user-event-rel/
     api/v1/user-event-rel/rel_id/
 
+    // category CRUD
+    api/v1/categories/
+    api/v1/categories/category_id/
+
 # Mailing
 This API uses smtp.mail.ru SMTP server.
 
