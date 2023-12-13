@@ -45,7 +45,7 @@ API:
     api/v1/user-event-rel/
     api/v1/user-event-rel/rel_id/
 
-#Mailing
+#vMailing
 This API uses smtp.mail.ru SMTP server.
 
 1) Every time new relation between user and event is created it sends notification to user's email.
