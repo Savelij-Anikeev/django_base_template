@@ -49,3 +49,5 @@ API:
 This API uses smtp.mail.ru SMTP server.
 
 1) Every time new relation between user and event is created it sends notification to user's email.
+
+...more functionality in the future...
