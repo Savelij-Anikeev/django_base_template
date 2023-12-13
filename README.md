@@ -21,4 +21,18 @@ API for utmn yandex case competition.
       Git
       Docker + compose
 # API endpoints:
-    Soon...
+admin:
+
+admin/ 
+
+auth:
+
+auth/users/
+auth/users/me/
+auth/token/login/
+auth/token/logout/
+
+API:
+
+api/v1/events/
+api/v1/events/event_id/
