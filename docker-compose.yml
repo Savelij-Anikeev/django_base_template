@@ -6,13 +6,15 @@ services:
       - "8000:8000"
     volumes:
       - ./service:/service
-
+    env_file:
+      - .env
     environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - DB_HOST=database
       - DB_NAME=dbname
       - DB_USER=dbuser
       - DB_PASS=pass
-
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
 
