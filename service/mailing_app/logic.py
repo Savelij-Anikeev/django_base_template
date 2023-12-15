@@ -25,12 +25,14 @@ def send_to_defined_person(instance_id):
         'event_time': instance.event.event_time,
     }
 
+    # getting html code
     msg_html = render_to_string(template_name='mailing_app/join-event-person.html', context=context)
 
-    send_mail(subject="First mail",
-              message="Here is the message.",
+    # sending email
+    send_mail(subject="Hello! You have joined event!",
+              message="",
               from_email=config.get('mail').get('EMAIL_HOST_USER'),
-              recipient_list=["anik.savamc@gmail.com"],
+              recipient_list=[instance.user.email],
               fail_silently=False,
               html_message=msg_html)
 
