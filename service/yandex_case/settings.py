@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-
+from .config import config
 import celery
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
     'event_app',
     'file_uploader_app',
+    'mailing_app',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
 MEDIA_URL = '/media/'
 
+
+mail_cfg = config.get('mail')
+
+EMAIL_HOST = mail_cfg.get('EMAIL_HOST')
+EMAIL_PORT = mail_cfg.get('EMAIL_PORT')
+EMAIL_USE_TLS = mail_cfg.get('EMAIL_USE_TLS')
+EMAIL_USE_SSL = mail_cfg.get('EMAIL_USE_SSL')
+EMAIL_HOST_USER = mail_cfg.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = mail_cfg.get('EMAIL_HOST_PASSWORD')
