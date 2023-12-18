@@ -40,10 +40,6 @@ API:
     api/v1/events/
     api/v1/events/event_id/
 
-    // list and retrieve users
-    api/v1/users/
-    api/v1/users/user_id/
-
     // relation CRUD
     api/v1/user-event-rel/
     api/v1/user-event-rel/rel_id/
