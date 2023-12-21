@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
-from yandex_case.config import config
+from django.conf import settings
+
 import celery
 from celery import shared_task
 from django.template.loader import render_to_string
@@ -31,7 +32,7 @@ def send_to_defined_person(instance_id):
     # sending email
     send_mail(subject="Hello! You have joined event!",
               message="",
-              from_email=config.get('mail').get('EMAIL_HOST_USER'),
+              from_email=settings.EMAIL_HOST_USER,
               recipient_list=[instance.user.email],
               fail_silently=False,
               html_message=msg_html)

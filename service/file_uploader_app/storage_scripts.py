@@ -1,4 +1,3 @@
-
 import os
 import boto3
 import uuid
@@ -20,17 +19,12 @@ def set_up():
     # starting connection
     session = boto3.session.Session()
 
-    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
-    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-
     s3 = session.client(
         service_name='s3',
         endpoint_url=endpoint_url,
         # Don`t steal it please
-        aws_access_key_id='YCAJE5PDVsfeJkHYmNI2dyfTH',
-        aws_secret_access_key='YCPu2Ut6tDGKTBU1zwBRdeCPDc2kdWCSCJ1gcjFY',
-        # aws_access_key_id=str(aws_access_key_id),
-        # aws_secret_access_key=str(aws_secret_access_key),
+        aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
     )
 
     return s3, bucket_name, endpoint_url
@@ -56,7 +50,7 @@ def upload_event(obj_id):
     os.remove((BASE_DIR + instance.photo.url))
 
     # setting the url up
-    instance.photo = None   # deleting photo cause it`s useless
+    instance.photo = None   # deleting photo 'cause it`s useless
     instance.photo_url = endpoint_url + '/' + bucket_name + '/' + filename
 
     # saving instance
@@ -70,7 +64,7 @@ def delete_file(file_url):
     """
 
     # setting up
-    s3 = set_up()
+    s3, bucket_name, endpoint_url = set_up()
 
     # list of obj information
     for_deletion = [
@@ -79,6 +73,6 @@ def delete_file(file_url):
         },
     ]
 
-    response = s3.delete_objects(Bucket='bucket-name', Delete={'Objects': for_deletion})
+    response = s3.delete_objects(Bucket=bucket_name, Delete={'Objects': for_deletion})
 
     return response

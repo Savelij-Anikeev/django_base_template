@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 class Event(models.Model):
-    """describes db fields of `Event`"""
+    """describes db fields of event"""
     # organizers info
     username = models.CharField(max_length=128)
     phone_number = models.CharField(max_length=11)
@@ -23,10 +23,12 @@ class Event(models.Model):
     photo = models.ImageField(null=True, blank=True)
     photo_url = models.CharField(max_length=1024, null=True, blank=True, default=settings.DEFAULT_IMG_URL)
 
+    # places
     is_place_limited = models.BooleanField(default=False)
     places = models.PositiveIntegerField(default=0, null=True, blank=True)
     free_places = models.PositiveIntegerField(default=0, null=True, blank=True)
 
+    # category
     category = models.ManyToManyField('Category', null=True, blank=True)
 
 

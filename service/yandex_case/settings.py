@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from .config import config
 import celery
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +19,7 @@ CELERY_BROKER_URL = 'redis://redis:6379/0'
 
 
 INSTALLED_APPS = [
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -27,19 +27,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # external apps
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
 
+    # project apps
     'event_app',
     'file_uploader_app',
     'mailing_app',
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
+    # cors
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -113,9 +117,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-    # 'DEFAULT_RENDERER_CLASSES': (
-    #     'rest_framework.renderers.JSONRenderer',
-    # )
 }
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -124,11 +125,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
 MEDIA_URL = '/media/'
 
 
-mail_cfg = config.get('mail')
-
-EMAIL_HOST = mail_cfg.get('EMAIL_HOST')
-EMAIL_PORT = mail_cfg.get('EMAIL_PORT')
-EMAIL_USE_TLS = mail_cfg.get('EMAIL_USE_TLS')
-EMAIL_USE_SSL = mail_cfg.get('EMAIL_USE_SSL')
-EMAIL_HOST_USER = mail_cfg.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = mail_cfg.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# 'EMAIL_BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
