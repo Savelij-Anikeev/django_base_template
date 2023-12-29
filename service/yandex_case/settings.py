@@ -32,11 +32,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-
-    # project apps
-    'event_app',
-    'file_uploader_app',
-    'mailing_app',
 ]
 
 MIDDLEWARE = [
